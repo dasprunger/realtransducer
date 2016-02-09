@@ -64,6 +64,16 @@ class PeriodicBinary(object):
     def __repr__(self):
         return str(self)
 
+    def fill_bits(self, length):
+        output = self.initial
+        while len(output) < length:
+            output += self.period
+        return output[0:length]
+
+    def __float__(self):  # not super precise...
+        numerator = int(self.fill_bits(50), 2)
+        return float(numerator)/float(2**50)
+
     def equal_in_s1(self, other):
         if not isinstance(other, PeriodicBinary):
             return False

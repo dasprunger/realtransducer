@@ -2,6 +2,7 @@ import itertools as it
 import networkx as nx
 import copy
 import realtransducer as rt
+import matplotlib.pyplot as plt
 
 
 def generate_targets(nodes, alphabet):
@@ -62,11 +63,15 @@ def generate_inputs(bits=5):
         yield "".join(i)
 
 
-def get_example_transducer(number):
-    with open("examples/%s.txt" % str(number), "r") as f:
+def get_transducer_from_start(filename):
+    with open(filename, "r") as f:
         first = f.readline()
         second = f.readline()
     return rt.RealTransducer.init_from_string(first, second)
+
+
+def get_example_transducer(number):
+    return get_example_transducer("examples/%s.txt" % str(number))
 
 
 def find_behavior_of_examples():
@@ -107,3 +112,16 @@ def find_minimal_machines():
                 behaviors.append(behavior)
                 count += 1
 
+
+def graph_minimal_machine(number, bits=5):
+    t = get_transducer_from_start("minimal/%s.txt" % str(number).zfill(3))
+    plt.plot([x/float(2**bits) for x in range(0, 2**bits)], [float(x) for x in t.initial_behavior(bits=bits)])
+    plt.ylabel("Behavior %s" % str(number))
+    plt.axis([0, 1, -0.1, 1.1])
+    plt.savefig("minimal/%s.png" % str(number).zfill(3))
+    plt.close()
+
+
+def graph_minimal_machines(end, start=0, bits=5):
+    for num in range(start, end):
+        graph_minimal_machine(num, bits)
