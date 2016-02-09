@@ -69,7 +69,7 @@ def get_example_transducer(number):
     return rt.RealTransducer.init_from_string(first, second)
 
 
-def find_behavior_of():
+def find_behavior_of_examples():
     behaviors = []
     count = 0
     for i in xrange(1, 10000):
@@ -86,6 +86,7 @@ def find_behavior_of():
                 f.write("\nmachine # %s\n" % str(i))
             behaviors.append(behavior)
             count += 1
+
 
 def find_minimal_machines():
     behaviors = []

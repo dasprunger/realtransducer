@@ -125,7 +125,6 @@ class RealTransducer(object):
         period = "".join(output_blocks[idx:])
         return PeriodicBinary(initial, period), current_node
 
-
     def _finite_frag_eval(self, finite_input, start_state=0):
         output = ''
         current_node = start_state

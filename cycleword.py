@@ -2,7 +2,7 @@ BINARY = ['0', '1']
 
 
 def _simplify_period(period):
-    for i in range(1, len(period)-1):
+    for i in range(1, len(period)):
         if len(period) % i != 0:
             continue
         else:
