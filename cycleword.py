@@ -15,7 +15,10 @@ def _simplify_period(period):
 def _simplify_initial(initial, period):
     while initial.endswith(period):
         initial = initial[0:-len(period)]
-    return initial
+    while initial and initial[-1] == period[-1]:
+        initial = initial[:-1]
+        period = period[-1] + period[:-1]
+    return initial, period
 
 
 class PeriodicBinary(object):
@@ -24,7 +27,7 @@ class PeriodicBinary(object):
 
     def _normalize_form(self):
         self.period = _simplify_period(self.period)
-        self.initial = _simplify_initial(self.initial, self.period)
+        self.initial, self.period = _simplify_initial(self.initial, self.period)
 
     def __init__(self, initial, period):
         if not isinstance(initial, str) or not isinstance(period, str):
